@@ -2,10 +2,71 @@
 <html lang="en">
 
 <head>
+    <style>
+        body {
+            overflow-x: hidden;
+        }
+        #content {
+            height: calc(100vh - 0px);
+            overflow: hidden;
+        }
+        :root {
+            --gradient1: linear-gradient(
+            49deg,
+            #fef4ff,
+            #e5ecee,
+            #e5ecee,
+            #c3ddf3,
+            #acc7f6,
+            #a1b9f9,
+            #d6c3ec,
+            #e1dffc,
+            #dadbfc,
+            #caccf4,
+            #cdacde
+            );
+        /* Other custom properties omitted for brevity */
+        }
+
+        #gradientText {
+            font-size: 27px;
+            background: var(--gradient1);
+            background-size: 400% 400%;
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: bg-animation 5s infinite linear;
+        }
+        
+        @keyframes bg-animation {
+            0% {
+                background-position: left;
+            }
+            100% {
+                background-position: right;
+            }
+        }
+        .CodeMirror {
+            border: 1px solid #4b5562;
+            height: auto;
+            font-size: 16px;
+        } 
+        #container {
+            display: flex;
+        }
+        #textareaContainer {
+            flex: 1;
+        }
+        #outputContainer {
+            flex: 1;
+        }
+    </style>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Online Code Editor</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/codemirror.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/codemirror.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
@@ -15,67 +76,385 @@
     <script src="codemirror-5.65.11/mode/python/python.js"></script>
     <script src="codemirror-5.65.11/lib/codemirror.js"></script>
     <script src="codemirror-5.65.11/mode/clike/clike.js"></script>
+    <link rel="stylesheet" href="codemirror-5.65.11/theme/3024-day.css">
+    <link rel="stylesheet" href="codemirror-5.65.11/theme/3024-night.css">
+    <link rel="stylesheet" href="codemirror-5.65.11/theme/abbott.css">
+    <link rel="stylesheet" href="codemirror-5.65.11/theme/abcdef.css">
+    <link rel="stylesheet" href="codemirror-5.65.11/theme/ambiance-mobile.css">
+    <link rel="stylesheet" href="codemirror-5.65.11/theme/ambiance.css">
+    <link rel="stylesheet" href="codemirror-5.65.11/theme/ayu-dark.css">
+    <link rel="stylesheet" href="codemirror-5.65.11/theme/ayu-mirage.css">
+    <link rel="stylesheet" href="codemirror-5.65.11/theme/base16-dark.css">
+    <link rel="stylesheet" href="codemirror-5.65.11/theme/base16-light.css">
+    <link rel="stylesheet" href="codemirror-5.65.11/theme/bespin.css">
+    <link rel="stylesheet" href="codemirror-5.65.11/theme/blackboard.css">
+    <link rel="stylesheet" href="codemirror-5.65.11/theme/cobalt.css">
+    <link rel="stylesheet" href="codemirror-5.65.11/theme/colorforth.css">
+    <link rel="stylesheet" href="codemirror-5.65.11/theme/darcula.css">
     <link rel="stylesheet" href="codemirror-5.65.11/theme/dracula.css">
+    <link rel="stylesheet" href="codemirror-5.65.11/theme/duotone-dark.css">
+    <link rel="stylesheet" href="codemirror-5.65.11/theme/duotone-light.css">
+    <link rel="stylesheet" href="codemirror-5.65.11/theme/eclipse.css">
+    <link rel="stylesheet" href="codemirror-5.65.11/theme/elegant.css">
+    <link rel="stylesheet" href="codemirror-5.65.11/theme/erlang-dark.css">
+    <link rel="stylesheet" href="codemirror-5.65.11/theme/gruvbox-dark.css">
+    <link rel="stylesheet" href="codemirror-5.65.11/theme/hopscotch.css">
+    <link rel="stylesheet" href="codemirror-5.65.11/theme/icecoder.css">
+    <link rel="stylesheet" href="codemirror-5.65.11/theme/idea.css">
+    <link rel="stylesheet" href="codemirror-5.65.11/theme/isotope.css">
+    <link rel="stylesheet" href="codemirror-5.65.11/theme/juejin.css">
+    <link rel="stylesheet" href="codemirror-5.65.11/theme/lesser-dark.css">
+    <link rel="stylesheet" href="codemirror-5.65.11/theme/liquibyte.css">
+    <link rel="stylesheet" href="codemirror-5.65.11/theme/lucario.css">
+    <link rel="stylesheet" href="codemirror-5.65.11/theme/material-darker.css">
+    <link rel="stylesheet" href="codemirror-5.65.11/theme/material-ocean.css">
+    <link rel="stylesheet" href="codemirror-5.65.11/theme/material-palenight.css">
+    <link rel="stylesheet" href="codemirror-5.65.11/theme/material.css">
+    <link rel="stylesheet" href="codemirror-5.65.11/theme/mbo.css">
+    <link rel="stylesheet" href="codemirror-5.65.11/theme/mdn-like.css">
+    <link rel="stylesheet" href="codemirror-5.65.11/theme/midnight.css">
+    <link rel="stylesheet" href="codemirror-5.65.11/theme/monokai.css">
+    <link rel="stylesheet" href="codemirror-5.65.11/theme/moxer.css">
+    <link rel="stylesheet" href="codemirror-5.65.11/theme/neo.css">
+    <link rel="stylesheet" href="codemirror-5.65.11/theme/neat.css">
+    <link rel="stylesheet" href="codemirror-5.65.11/theme/night.css">
+    <link rel="stylesheet" href="codemirror-5.65.11/theme/nord.css">
+    <link rel="stylesheet" href="codemirror-5.65.11/theme/oceanic-next.css">
+    <link rel="stylesheet" href="codemirror-5.65.11/theme/panda-syntax.css">
+    <link rel="stylesheet" href="codemirror-5.65.11/theme/paraiso-dark.css">
+    <link rel="stylesheet" href="codemirror-5.65.11/theme/paraiso-light.css">
+    <link rel="stylesheet" href="codemirror-5.65.11/theme/pastel-on-dark.css">
+    <link rel="stylesheet" href="codemirror-5.65.11/theme/railscasts.css">
+    <link rel="stylesheet" href="codemirror-5.65.11/theme/rubyblue.css">
+    <link rel="stylesheet" href="codemirror-5.65.11/theme/seti.css">
+    <link rel="stylesheet" href="codemirror-5.65.11/theme/shadowfox.css">
+    <link rel="stylesheet" href="codemirror-5.65.11/theme/solarized.css">
+    <link rel="stylesheet" href="codemirror-5.65.11/theme/ssms.css">
+    <link rel="stylesheet" href="codemirror-5.65.11/theme/the-matrix.css">
+    <link rel="stylesheet" href="codemirror-5.65.11/theme/tomorrow-night-bright.css">
+    <link rel="stylesheet" href="codemirror-5.65.11/theme/tomorrow-night-eighties.css">
+    <link rel="stylesheet" href="codemirror-5.65.11/theme/ttcn.css">
+    <link rel="stylesheet" href="codemirror-5.65.11/theme/twilight.css">
+    <link rel="stylesheet" href="codemirror-5.65.11/theme/vibrant-ink.css">
+    <link rel="stylesheet" href="codemirror-5.65.11/theme/xq-dark.css">
+    <link rel="stylesheet" href="codemirror-5.65.11/theme/xq-light.css">
+    <link rel="stylesheet" href="codemirror-5.65.11/theme/yeti.css">
+    <link rel="stylesheet" href="codemirror-5.65.11/theme/yonce.css">
+    <link rel="stylesheet" href="codemirror-5.65.11/theme/zenburn.css">
     <script src="codemirror-5.65.11/addon/edit/closebrackets.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
 </head>
 
 <body>
-    <div class="row m-3">
-        <div class="col">
-            <div class="d-flex justify-content-between mb-2 bg-dark rounded p-2">
-                <div class="col-12 w-25">
-                    <label class="visually-hidden" for="inlineFormSelectPref">Preference</label>
-                    <select class="form-select" id="inlineFormSelectPref">
-                        <option selected>Choose...</option>
-                        <option value="Java">Java</option>
+    
+    <div id="content" class="row bg-dark">
+        <div class="col bg-dark">
+            <div class="d-flex p-2" style="background-color: #0f172a; width: 100%;border: 1px solid #4b5563">
+                <div class="">
+                    <label id="gradientText" class="bi bi-file-earmark-code-fill me-3" ><b> Online Code Editor</b></label>
+                </div>
+                <!--Language Button-->
+                <div class="me-2">
+                    <label class="visually-hidden" for="LangSelectPref">Preference</label>
+                    <select style="background-color: rgb(31 41 55); border-color: rgb(75 85 99); color: white;"class="form-select" id="LangSelectPref">
+                        <option selected>Language</option>
                         <option value="Cpp">Cpp</option>
+                        <option value="Java">Java</option>
                         <option value="Python">Python</option>
                     </select>
                 </div>
-                <div>
-                    <button type="button" class="btn btn-success">CodeX</button>
-                    <button type="button" id="run" class="btn btn-success"><i class="bi bi-play-fill"></i></button>
+                
+                <!--Theme Button-->
+                <div class="me-2">
+                    <label class="visually-hidden" for="ThemeSelectPref">Preference</label>
+                    <select style="background-color: rgb(31 41 55); border-color: rgb(75 85 99); color: white;" class="form-select" id="ThemeSelectPref">
+                        <option selected>Theme</option>
+                        <option value="3024-day">3024-day</option>
+                        <option value="3024-night">3024-night</option>
+                        <option value="abbott">abbott</option>
+                        <option value="abcdef">abcdef</option>
+                        <option value="ambiance-mobile">ambiance-mobile</option>
+                        <option value="ambiance">ambiance</option>
+                        <option value="ayu-dark">ayu-dark</option>
+                        <option value="ayu-mirage">ayu-mirage</option>
+                        <option value="base16-dark">base16-dark</option>
+                        <option value="base16-light">base16-light</option>
+                        <option value="bespin">bespin</option>
+                        <option value="blackboard">blackboard</option>
+                        <option value="cobalt">cobalt</option>
+                        <option value="colorforth">colorforth</option>
+                        <option value="darcula">darcula</option>
+                        <option value="dracula">dracula</option>
+                        <option value="duotone-dark">duotone-dark</option>
+                        <option value="duotone-light">duotone-light</option>
+                        <option value="eclipse">eclipse</option>
+                        <option value="elegant">elegant</option>
+                        <option value="erlang-dark">erlang-dark</option>
+                        <option value="gruvbox-dark">gruvbox-dark</option>
+                        <option value="hopscotch">hopscotch</option>
+                        <option value="icecoder">icecoder</option>
+                        <option value="idea">idea</option>
+                        <option value="isotope">isotope</option>
+                        <option value="juejin">juejin</option>
+                        <option value="lesser-dark">lesser-dark</option>
+                        <option value="liquibyte">liquibyte</option>
+                        <option value="lucario">lucario</option>
+                        <option value="material-darker">material-darker</option>
+                        <option value="material-ocean">material-ocean</option>
+                        <option value="material-palenight">material-palenight</option>
+                        <option value="material">material</option>
+                        <option value="mbo">mbo</option>
+                        <option value="mdn-like">mdn-like</option>
+                        <option value="midnight">midnight</option>
+                        <option value="monokai">monokai</option>
+                        <option value="moxer">moxer</option>
+                        <option value="neo">neo</option>
+                        <option value="neat">neat</option>
+                        <option value="night">night</option>
+                        <option value="nord">nord</option>
+                        <option value="oceanic-next">oceanic-next</option>
+                        <option value="panda-syntax">panda-syntax</option>
+                        <option value="paraiso-dark">paraiso-dark</option>
+                        <option value="paraiso-light">paraiso-light</option>
+                        <option value="pastel-on-dark">pastel-on-dark</option>
+                        <option value="railscasts">railscasts</option>
+                        <option value="rubyblue">rubyblue</option>
+                        <option value="seti">seti</option>
+                        <option value="shadowfox">shadowfox</option>
+                        <option value="solarized">solarized</option>
+                        <option value="ssms">ssms</option>
+                        <option value="the-matrix">the-matrix</option>
+                        <option value="tomorrow-night-bright">tom-night-bright</option>
+                        <option value="tomorrow-night-eighties">tom-night-eighties</option>
+                        <option value="ttcn">ttcn</option>
+                        <option value="twilight">twilight</option>
+                        <option value="vibrant-ink">vibrant-ink</option>
+                        <option value="xq-dark">xq-dark</option>
+                        <option value="xq-light">xq-light</option>
+                        <option value="yeti">yeti</option>
+                        <option value="yonce">yonce</option>
+                        <option value="zenburn">zenburn</option>
+                    </select>
+                </div>
+                
+                <!--FontSize Button-->
+                <div class="me-3">
+                    <label style="background-color: rgb(31 41 55); border-color: rgb(75 85 99); color: white;" class="btn btn-success w-75 h-100" for="fontSizeInput">Font Size <input type="number" id="fontSizeInput" value="16" style="text-align:center;" class="rounded w-50 h-100" oninput="changeFontSize(this.value)"></label>
+                </div>
+                
+                <div class="" >
+                    <!--FullScreen Button-->
+                    <button style="background-color: rgb(31 41 55); border-color: rgb(75 85 99); color: white;" type="button" class="btn btn-success me-1" id="fullScreenButton">
+                        <i id="fullScreenIcon" class="bi bi-fullscreen"></i> ( F11 )
+                    </button>
+                    
+                    <!--Copy Button-->
+                    <button type="button" id="copyButton" style="background-color: rgb(31 41 55); border-color: rgb(75 85 99); color: white;" type="button" class="btn btn-success bi bi-files me-1" onclick="copyTextFromEditor(editor)"> Copy</button>
+                    
+                    <!--Run Button-->
+                    <button type="button" id="run" style="background-color: rgb(120, 59, 177);" class="btn btn-dark bi bi-play-circle-fill text-light me-1"> Run ( F9 )</button>
+                    
+                    <!--Save Button-->
+                    <button type="button" style="background-color:rgb(65, 165, 109) ;" class="btn btn-success bi-cloud-arrow-down-fill me-1" onclick="saveCode()"> Save ( ctrl+s )</button>
+                    
+                    <!--Erase Button-->
+                    <button type="button" style="background-color:rgb(234, 67, 67) ;" class="btn btn-danger bi bi-eraser-fill me-1" onclick="eraseTextInEditor(editor)"> Erase ( ctrl+e )</button>
+                    
+                    <!--Rename Button
+                    <button type="button" style="background-color:rgb(97, 97, 229) ;" class="btn btn-primary bi bi-send-fill" id="renameButton"> Rename</button>
+                    -->
                 </div>
             </div>
-            <textarea type="text" id="editor" class="form-control" aria-label="First name"></textarea>
-        </div>
-        <div class="col d-flex flex-column rounded bg-dark px-4">
-            <div class="h-50">
-                <label for="Input" class="text-light mt-4 mb-2">Input</label>
-                <textarea type="text" id="input" class="form-control h-75" aria-label="Last name"></textarea>
-            </div>
-            <div class="h-50">
-                <label for="Output" class="text-light mb-2">Output</label>
-                <textarea type="text" id="output" class="form-control h-75" aria-label="Last name"></textarea>
+
+            <div id="container" >
+                <!--Editor Window-->
+                <div id="textareaContainer" >
+                    <textarea id="editor">/* Write your code here */</textarea>
+                </div>
+
+                <!--Input & Output Window-->
+                <div id="outputContainer" style="display: flex; flex-direction: row;border: 1px solid #4b5563;">
+                    <div class="col d-flex flex-column rounded px-4" style="background-color: #0f172a;">
+                        <div class="h-75">
+                            <label for="Input" class="text-light mb-2" style="font-size: 20px; display: flex; flex-direction: row;"><b>Input</b></label>
+                            <textarea type="text" id="input" style="background-color: #1e293b; border-color: rgb(75 85 99); color: white;" class="form-control h-50" aria-label="Last name"></textarea>
+                            <label for="Output" class="text-light mt-2 mb-2" style="font-size: 20px;"><b>Output</b></label>
+                            <textarea type="text" id="output" style="background-color: #1e293b; border-color: rgb(75 85 99); color: white;" class="form-control h-50" aria-label="Last name"></textarea>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+    
 </body>
+
 <script>
+    //text on click refresh function
+    var label = document.getElementById("gradientText");
+    label.addEventListener("click", function() {
+        location.reload();
+    });
+
+    //fontsize function
+    function changeFontSize(size) {
+        editor.getWrapperElement().style["font-size"] = size + "px";
+        editor.refresh();
+    }
+
+    //copy function
+    function copyTextFromEditor(editor) {
+        var textarea = document.createElement('textarea');
+        textarea.value = editor.getValue();
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+        alert("Code copied successfully!");
+    }
+
+    //editor function
+    var option = document.getElementById("ThemeSelectPref")
     var editor = CodeMirror.fromTextArea(document.getElementById("editor"), {
-        mode: "text/x-c++src",
-        theme: "dracula",
         lineNumbers: true,
         autoCloseBrackets: true,
+        theme : "material-palenight"
+    });
+    
+    //sample code function
+    var samples = {
+        "Cpp": "/* C++ sample code */\n#include <iostream>\nint main() {\n    std::cout << \"Hello, World!\" << std::endl;\n    return 0;\n}",
+        "Java": "/* Java sample code */\npublic class Main {\n    public static void main(String[] args) {\n        System.out.println(\"Hello, Java User!\");\n    }\n}",
+        "Python": "# Python sample code\nprint(\"Hello, Python User!\")"
+    };
+    function setSampleCode(language) {
+        var code = samples[language];
+        editor.setValue(code);
+    }
+    document.getElementById("LangSelectPref").addEventListener("change", function(event) {
+        setSampleCode(event.target.value);
+    });
 
-    })
+    //save function
+    function saveCode() {
+        console.log("savecode function called")
+        let editor = document.getElementById("editor");
+        let code = editor.value.trim();
+        console.log("code",code);
+        let language = document.getElementById("LangSelectPref").value;
+        let extension;
+        switch (language) {
+            case "Cpp":
+            extension = ".cpp";
+            break;
+            case "Java":
+            extension = ".java";
+            break;
+            case "Python":
+            extension = ".py";
+            break;
+            default:
+            extension = ".txt";
+        }
+        if (code.length > 0) {
+            let filename = prompt("Enter the filename:");
+            if (filename) {
+                let blob = new Blob([code], {type: "text/plain"});
+                let url = URL.createObjectURL(blob);
+                let a = document.createElement("a");
+                a.href = url;
+                a.download = filename + extension;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+            }
+        } else {
+            alert("Please enter some code to save.");
+        }
+    }
+    document.addEventListener("keydown", function(event) {
+        if (event.ctrlKey && event.key === "s") {
+            event.preventDefault();
+            saveCode();
+        }
+    });
+
+    //erase function
+    function eraseTextInEditor(editor) {
+        if (confirm("Are you sure you want to erase the code?")) {
+            editor.setValue('');
+        }
+    }
+    document.addEventListener("keydown", (event) => {
+        if (event.ctrlKey && event.key === "e") {
+            let editor = document.querySelector('.CodeMirror').CodeMirror;
+            if (confirm("Are you sure you want to erase the code?")) {
+                editor.setValue("");
+            }
+            event.preventDefault();
+        }
+    });
+
+    //theme function
+    document.getElementById("ThemeSelectPref").addEventListener("change", function(event) {
+        var theme = event.target.value;
+        editor.setOption("theme", theme);
+    });
+
+    //fullsceen function
+    let fullScreenButton = document.getElementById("fullScreenButton");
+    let fullScreenIcon = document.getElementById("fullScreenIcon");
+    fullScreenButton.addEventListener("click", () => {
+        if (!document.fullscreenElement) {
+            document.documentElement.requestFullscreen();
+        } else {
+            document.exitFullscreen();
+        }
+    });
+    document.addEventListener("fullscreenchange", () => {
+        if (document.fullscreenElement) {
+            fullScreenIcon.className = "bi bi-fullscreen-exit";
+            editor.setSize(0.7 * width, "790"); // Update the size of the editor when entering full-screen mode
+        } else {
+            fullScreenIcon.className = "bi bi-fullscreen";
+            editor.setSize(0.7 * width, "640"); // Update the size of the editor when exiting full-screen mode
+        }
+    });
+    document.addEventListener("keydown", (event) => {
+        if (event.key === "F11") {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen();
+            } else {
+                document.exitFullscreen();
+            }
+            event.preventDefault();
+        }
+    });
+
+    //run function
+    var runButton = document.getElementById("run");
+    runButton.addEventListener("click", function () {
+        alert("Running code...");
+    });
+
+    //language function
     var width = window.innerWidth
     var input = document.getElementById("input")
     var output = document.getElementById("output")
     var run = document.getElementById("run")
-    editor.setSize(0.7 * width, "500")
-    var option = document.getElementById("inlineFormSelectPref")
+    editor.setSize(0.7*width,"640")
+    var option = document.getElementById("LangSelectPref")
     option.addEventListener("change", function () {
-        if (option.value == "Java") {
-            editor.setOption("mode", "text/x-java")
-        }
-        else if (option.value == "Python") {
-            editor.setOption("mode", "text/x-python")
-        }
-        else {
+        if (option.value == "Cpp"){
             editor.setOption("mode", "text/x-c++src")
         }
+        else if (option.value == "Java") {
+            editor.setOption("mode", "text/x-java")
+        }
+        else if (option.value == "python") {
+            editor.setOption("mode", "text/x-python")
+        }
+        
     })
     var code;
     run.addEventListener("click", async function () {
@@ -94,6 +473,11 @@
         var d = await oData.json()
         output.value = d.output
     })
+    document.addEventListener("keydown", function(event) {
+        if (event.key === "F9") {
+            run.click();
+        }
+    });
 </script>
 
 </html>
