@@ -42,6 +42,30 @@ app.post("/compile", function (req, res) {
                 });
             }
         }
+        else if (lang == "C") {
+            if (!input) {
+                var envData = { OS: "windows", cmd: "g++", options: { timeout: 10000 } };
+                compiler.compileCPP(envData, code, function (data) {
+                    if (data.output) {
+                        res.send(data);
+                    }
+                    else {
+                        res.send({ output: "error" })
+                    }
+                });
+            }
+            else {
+                var envData = { OS: "windows", cmd: "g++", options: { timeout: 10000 } };
+                compiler.compileCPPWithInput(envData, code, input, function (data) {
+                    if (data.output) {
+                        res.send(data);
+                    }
+                    else {
+                        res.send({ output: "error" })
+                    }
+                });
+            }
+        }
         else if (lang == "Java") {
             if (!input) {
                 var envData = { OS: "windows" };

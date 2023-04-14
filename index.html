@@ -53,12 +53,21 @@
         } 
         #container {
             display: flex;
+            flex-direction: row;
+            height: 100vh;
+        }
+        #editor {
+            width: 100%;
+            height: 100%;
         }
         #textareaContainer {
-            flex: 1;
+            flex: 7;
+            height: 100%;
         }
+
         #outputContainer {
-            flex: 1;
+            flex: 3;
+            height: 100%;
         }
     </style>
     <meta charset="UTF-8">
@@ -67,14 +76,15 @@
     <title>Online Code Editor</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/codemirror.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.11/mode/javascript/javascript.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
         crossorigin="anonymous"></script>
     <link rel="stylesheet" href="codemirror-5.65.11/lib/codemirror.css">
-    <script src="codemirror-5.65.11/mode/python/python.js"></script>
     <script src="codemirror-5.65.11/lib/codemirror.js"></script>
+    <script src="codemirror-5.65.11/mode/python/python.js"></script>
     <script src="codemirror-5.65.11/mode/clike/clike.js"></script>
     <link rel="stylesheet" href="codemirror-5.65.11/theme/3024-day.css">
     <link rel="stylesheet" href="codemirror-5.65.11/theme/3024-night.css">
@@ -151,15 +161,15 @@
         <div class="col bg-dark">
             <div class="d-flex p-2" style="background-color: #0f172a; width: 100%;border: 1px solid #4b5563">
                 <div class="">
-                    <label id="gradientText" class="bi bi-file-earmark-code-fill me-3" ><b> Online Code Editor</b></label>
+                    <label id="gradientText" class="bi bi-file-earmark-code-fill me-5" ><b> Online Code Editor</b></label>
                 </div>
                 <!--Language Button-->
                 <div class="me-2">
                     <label class="visually-hidden" for="LangSelectPref">Preference</label>
                     <select style="background-color: rgb(31 41 55); border-color: rgb(75 85 99); color: white;"class="form-select" id="LangSelectPref">
-                        <option selected>Language</option>
-                        <option value="Cpp">Cpp</option>
                         <option value="Java">Java</option>
+                        <option value="C">C</option>
+                        <option value="Cpp">C++</option>
                         <option value="Python">Python</option>
                     </select>
                 </div>
@@ -168,7 +178,6 @@
                 <div class="me-2">
                     <label class="visually-hidden" for="ThemeSelectPref">Preference</label>
                     <select style="background-color: rgb(31 41 55); border-color: rgb(75 85 99); color: white;" class="form-select" id="ThemeSelectPref">
-                        <option selected>Theme</option>
                         <option value="3024-day">3024-day</option>
                         <option value="3024-night">3024-night</option>
                         <option value="abbott">abbott</option>
@@ -238,7 +247,7 @@
                 </div>
                 
                 <!--FontSize Button-->
-                <div class="me-3">
+                <div class="">
                     <label style="background-color: rgb(31 41 55); border-color: rgb(75 85 99); color: white;" class="btn btn-success w-75 h-100" for="fontSizeInput">Font Size <input type="number" id="fontSizeInput" value="16" style="text-align:center;" class="rounded w-50 h-100" oninput="changeFontSize(this.value)"></label>
                 </div>
                 
@@ -252,13 +261,13 @@
                     <button type="button" id="copyButton" style="background-color: rgb(31 41 55); border-color: rgb(75 85 99); color: white;" type="button" class="btn btn-success bi bi-files me-1" onclick="copyTextFromEditor(editor)"> Copy</button>
                     
                     <!--Run Button-->
-                    <button type="button" id="run" style="background-color: rgb(120, 59, 177);" class="btn btn-dark bi bi-play-circle-fill text-light me-1"> Run ( F9 )</button>
+                    <button type="button" id="run" style="background-color: #2aa36b;" class="btn btn-secondary bi bi-play-circle-fill text-light me-1"> Run ( F9 )</button>
                     
                     <!--Save Button-->
-                    <button type="button" style="background-color:rgb(65, 165, 109) ;" class="btn btn-success bi-cloud-arrow-down-fill me-1" onclick="saveCode()"> Save ( ctrl+s )</button>
+                    <button type="button" style="background-color:rgb(79, 79, 227) ;" class="btn btn-secondary bi-cloud-arrow-down-fill me-1" onclick="saveCode()"> Save ( ctrl+s )</button>
                     
                     <!--Erase Button-->
-                    <button type="button" style="background-color:rgb(234, 67, 67) ;" class="btn btn-danger bi bi-eraser-fill me-1" onclick="eraseTextInEditor(editor)"> Erase ( ctrl+e )</button>
+                    <button type="button" style="background-color: rgb(126, 43, 203) ;" class="btn btn-secondary bi bi-eraser-fill me-1" onclick="eraseTextInEditor(editor)"> Erase ( ctrl+e )</button>
                     
                     <!--Rename Button
                     <button type="button" style="background-color:rgb(97, 97, 229) ;" class="btn btn-primary bi bi-send-fill" id="renameButton"> Rename</button>
@@ -266,19 +275,21 @@
                 </div>
             </div>
 
-            <div id="container" >
+            <div id="container">
                 <!--Editor Window-->
-                <div id="textareaContainer" >
-                    <textarea id="editor">/* Write your code here */</textarea>
+                <div style="background-color: #0f172a;">
+                    <div id="textareaContainer" >
+                        <textarea id="editor"></textarea>
+                    </div>
                 </div>
 
                 <!--Input & Output Window-->
-                <div id="outputContainer" style="display: flex; flex-direction: row;border: 1px solid #4b5563;">
-                    <div class="col d-flex flex-column rounded px-4" style="background-color: #0f172a;">
+                <div id="outputContainer" style="border: 1px solid #4b5563;">
+                    <div class="col d-flex flex-column rounded px-2" style="background-color: #0f172a; height: 100%;">
                         <div class="h-75">
-                            <label for="Input" class="text-light mb-2" style="font-size: 20px; display: flex; flex-direction: row;"><b>Input</b></label>
+                            <label id="gradientText" for="Input" class="text-light mt-1 mb-2" style="font-size: 20px; display: flex; flex-direction: row;"><b>Input</b></label>
                             <textarea type="text" id="input" style="background-color: #1e293b; border-color: rgb(75 85 99); color: white;" class="form-control h-50" aria-label="Last name"></textarea>
-                            <label for="Output" class="text-light mt-2 mb-2" style="font-size: 20px;"><b>Output</b></label>
+                            <label id="gradientText" for="Output" class="text-light mt-1 mb-2" style="font-size: 20px; display: flex; flex-direction: row;"><b>Output</b></label>
                             <textarea type="text" id="output" style="background-color: #1e293b; border-color: rgb(75 85 99); color: white;" class="form-control h-50" aria-label="Last name"></textarea>
                         </div>
                     </div>
@@ -314,18 +325,24 @@
     }
 
     //editor function
-    var option = document.getElementById("ThemeSelectPref")
+    var langoption = document.getElementById("LangSelectPref")
+    var themeoption = document.getElementById("ThemeSelectPref")
     var editor = CodeMirror.fromTextArea(document.getElementById("editor"), {
         lineNumbers: true,
         autoCloseBrackets: true,
-        theme : "material-palenight"
+        theme: "blackboard", // set default theme to blackboard 
+        mode: "text/x-java" // set default mode to Java
     });
-    
+    langoption.value = "Java";
+    themeoption.value = "blackboard";
+
+
     //sample code function
     var samples = {
-        "Cpp": "/* C++ sample code */\n#include <iostream>\nint main() {\n    std::cout << \"Hello, World!\" << std::endl;\n    return 0;\n}",
-        "Java": "/* Java sample code */\npublic class Main {\n    public static void main(String[] args) {\n        System.out.println(\"Hello, Java User!\");\n    }\n}",
-        "Python": "# Python sample code\nprint(\"Hello, Python User!\")"
+        "Java": "/* Java sample code */\npublic class Main {\n    public static void main(String[] args) {\n        System.out.println(\"Hello, Welcome to Java!\");\n    }\n}",
+        "C": "/* C sample code */\n#include <stdio.h>\n\nint main() {\n    printf(\"Hello, Welcome to C!\\n\");\n    return 0;\n}",
+        "Cpp": "/* C++ sample code */\n#include <iostream>\nint main() {\n    std::cout << \"Hello, Welcome to C++!\" << std::endl;\n    return 0;\n}",
+        "Python": "# Python sample code \nprint(\"Hello, Welcome to Python!\")"
     };
     function setSampleCode(language) {
         var code = samples[language];
@@ -337,18 +354,18 @@
 
     //save function
     function saveCode() {
-        console.log("savecode function called")
-        let editor = document.getElementById("editor");
-        let code = editor.value.trim();
-        console.log("code",code);
+        let code = editor.getValue().trim();
         let language = document.getElementById("LangSelectPref").value;
         let extension;
         switch (language) {
-            case "Cpp":
-            extension = ".cpp";
-            break;
             case "Java":
             extension = ".java";
+            break;
+            case "C":
+            extension = ".c";
+            break;
+            case "Cpp":
+            extension = ".cpp";
             break;
             case "Python":
             extension = ".py";
@@ -414,10 +431,14 @@
     document.addEventListener("fullscreenchange", () => {
         if (document.fullscreenElement) {
             fullScreenIcon.className = "bi bi-fullscreen-exit";
-            editor.setSize(0.7 * width, "790"); // Update the size of the editor when entering full-screen mode
+            const windowWidth = window.innerWidth;
+            const editorWidth = windowWidth * 0.7;
+            editor.setSize(editorWidth, windowWidth) // Update the size of the editor when entering full-screen mode
         } else {
             fullScreenIcon.className = "bi bi-fullscreen";
-            editor.setSize(0.7 * width, "640"); // Update the size of the editor when exiting full-screen mode
+            const windowWidth = window.innerWidth;
+            const editorWidth = windowWidth * 0.7;
+            editor.setSize(editorWidth, windowWidth) // Update the size of the editor when exiting full-screen mode
         }
     });
     document.addEventListener("keydown", (event) => {
@@ -434,7 +455,6 @@
     //run function
     var runButton = document.getElementById("run");
     runButton.addEventListener("click", function () {
-        alert("Running code...");
     });
 
     //language function
@@ -442,10 +462,16 @@
     var input = document.getElementById("input")
     var output = document.getElementById("output")
     var run = document.getElementById("run")
-    editor.setSize(0.7*width,"640")
+    const windowWidth = window.innerWidth;
+    const editorWidth = windowWidth * 0.7;
+    editor.setSize(editorWidth, windowWidth);
+    editor.setValue(samples["Java"]);
     var option = document.getElementById("LangSelectPref")
     option.addEventListener("change", function () {
-        if (option.value == "Cpp"){
+        if (option.value == "C"){
+            editor.setOption("mode", "text/x-csrc")
+        }
+        else if (option.value == "Cpp"){
             editor.setOption("mode", "text/x-c++src")
         }
         else if (option.value == "Java") {
@@ -477,6 +503,13 @@
         if (event.key === "F9") {
             run.click();
         }
+    });
+
+    //Window Default Size
+    window.addEventListener("resize", () => {
+        const newWidth = 0.7 * window.innerWidth;
+        const newHeight = window.innerHeight;
+        editor.setSize(newWidth, newHeight);
     });
 </script>
 
