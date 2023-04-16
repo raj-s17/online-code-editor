@@ -24,9 +24,10 @@ app.post("/compile", function (req, res) {
                 compiler.compileCPP(envData, code, function (data) {
                     if (data.output) {
                         res.send(data);
-                    }
-                    else {
-                        res.send({ output: "error" })
+                    } else if (data.error) {
+                        res.send({ output: data.error });
+                    } else {
+                        res.send({ output: "Unknown error occurred" });
                     }
                 });
             }
@@ -35,9 +36,10 @@ app.post("/compile", function (req, res) {
                 compiler.compileCPPWithInput(envData, code, input, function (data) {
                     if (data.output) {
                         res.send(data);
-                    }
-                    else {
-                        res.send({ output: "error" })
+                    } else if (data.error) {
+                        res.send({ output: data.error });
+                    } else {
+                        res.send({ output: "Unknown error occurred" });
                     }
                 });
             }
@@ -48,9 +50,10 @@ app.post("/compile", function (req, res) {
                 compiler.compileCPP(envData, code, function (data) {
                     if (data.output) {
                         res.send(data);
-                    }
-                    else {
-                        res.send({ output: "error" })
+                    } else if (data.error) {
+                        res.send({ output: data.error });
+                    } else {
+                        res.send({ output: "Unknown error occurred" });
                     }
                 });
             }
@@ -59,9 +62,10 @@ app.post("/compile", function (req, res) {
                 compiler.compileCPPWithInput(envData, code, input, function (data) {
                     if (data.output) {
                         res.send(data);
-                    }
-                    else {
-                        res.send({ output: "error" })
+                    } else if (data.error) {
+                        res.send({ output: data.error });
+                    } else {
+                        res.send({ output: "Unknown error occurred" });
                     }
                 });
             }
@@ -72,9 +76,10 @@ app.post("/compile", function (req, res) {
                 compiler.compileJava(envData, code, function (data) {
                     if (data.output) {
                         res.send(data);
-                    }
-                    else {
-                        res.send({ output: "error" })
+                    } else if (data.error) {
+                        res.send({ output: data.error });
+                    } else {
+                        res.send({ output: "Unknown error occurred" });
                     }
                 });
             }
@@ -83,9 +88,10 @@ app.post("/compile", function (req, res) {
                 compiler.compileJavaWithInput(envData, code, input, function (data) {
                     if (data.output) {
                         res.send(data);
-                    }
-                    else {
-                        res.send({ output: "error" })
+                    } else if (data.error) {
+                        res.send({ output: data.error });
+                    } else {
+                        res.send({ output: "Unknown error occurred" });
                     }
                 });
             }
@@ -96,9 +102,10 @@ app.post("/compile", function (req, res) {
                 compiler.compilePython(envData, code, function (data) {
                     if (data.output) {
                         res.send(data);
-                    }
-                    else {
-                        res.send({ output: "error" })
+                    } else if (data.error) {
+                        res.send({ output: data.error });
+                    } else {
+                        res.send({ output: "Unknown error occurred" });
                     }
                 });
             }
@@ -107,9 +114,10 @@ app.post("/compile", function (req, res) {
                 compiler.compilePythonWithInput(envData, code, input, function (data) {
                     if (data.output) {
                         res.send(data);
-                    }
-                    else {
-                        res.send({ output: "error" })
+                    } else if (data.error) {
+                        res.send({ output: data.error });
+                    } else {
+                        res.send({ output: "Unknown error occurred" });
                     }
                 });
             }

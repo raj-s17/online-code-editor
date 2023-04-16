@@ -77,15 +77,26 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/codemirror.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/codemirror.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.11/mode/javascript/javascript.min.js"></script>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
         crossorigin="anonymous"></script>
+    
     <link rel="stylesheet" href="codemirror-5.65.11/lib/codemirror.css">
     <script src="codemirror-5.65.11/lib/codemirror.js"></script>
+    
     <script src="codemirror-5.65.11/mode/python/python.js"></script>
     <script src="codemirror-5.65.11/mode/clike/clike.js"></script>
+    
+    <script src="codemirror-5.65.11/dialog/dialog.js"></script>
+    <script src="codemirror-5.65.11/dialog/dialog.css"></script>
+    <script src="codemirror-5.65.11/addon/search/search.js"></script>
+    <script src="codemirror-5.65.11/addon/search/searchcursor.js"></script>
+    <script src="codemirror-5.65.11/addon/search/jump-to-line.js"></script>
+    
     <link rel="stylesheet" href="codemirror-5.65.11/theme/3024-day.css">
     <link rel="stylesheet" href="codemirror-5.65.11/theme/3024-night.css">
     <link rel="stylesheet" href="codemirror-5.65.11/theme/abbott.css">
@@ -152,6 +163,7 @@
     <link rel="stylesheet" href="codemirror-5.65.11/theme/yonce.css">
     <link rel="stylesheet" href="codemirror-5.65.11/theme/zenburn.css">
     <script src="codemirror-5.65.11/addon/edit/closebrackets.js"></script>
+    <script src="codemirror-5.65.11/addon/edit/matchbrackets.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
 </head>
 
@@ -330,12 +342,12 @@
     var editor = CodeMirror.fromTextArea(document.getElementById("editor"), {
         lineNumbers: true,
         autoCloseBrackets: true,
+        matchBrackets: true,
         theme: "blackboard", // set default theme to blackboard 
         mode: "text/x-java" // set default mode to Java
     });
     langoption.value = "Java";
     themeoption.value = "blackboard";
-
 
     //sample code function
     var samples = {
@@ -344,6 +356,14 @@
         "Cpp": "/* C++ sample code */\n#include <iostream>\nint main() {\n    std::cout << \"Hello, Welcome to C++!\" << std::endl;\n    return 0;\n}",
         "Python": "# Python sample code \nprint(\"Hello, Welcome to Python!\")"
     };
+    // var samples = {
+    //     "Java": "/* Java sample code */\nimport java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner input = new Scanner(System.in);\n        System.out.print(\"Enter first number: \");\n        int num1 = input.nextInt();\n        System.out.print(\"\\nEnter second number: \");\n        int num2 = input.nextInt();\n        int sum = num1 + num2;\n        System.out.println(\"\\nThe sum of \" + num1 + \" and \" + num2 + \" is \" + sum);\n    }\n}",
+    //     "C": "/* C sample code */\n#include <stdio.h>\n\nint main() {\n    int num1, num2, sum;\n    printf(\"Enter first number: \");\n    scanf(\"%d\", &num1);\n    printf(\"\\nEnter second number: \");\n    scanf(\"%d\", &num2);\n    sum = num1 + num2;\n    printf(\"\\nThe sum of %d and %d is %d\\n\", num1, num2, sum);\n    return 0;\n}",
+    //     "Cpp": "/* C++ sample code */\n#include <iostream>\n\nusing namespace std;\n\nint main() {\n    int num1, num2, sum;\n    cout << \"Enter first number: \";\n    cin >> num1;\n    cout << \"\\nEnter second number: \";\n    cin >> num2;\n    sum = num1 + num2;\n    cout << \"\\nThe sum of \" << num1 << \" and \" << num2 << \" is \" << sum << endl;\n    return 0;\n}",
+    //     "Python": "# Python sample code \nnum1 = int(input(\"Enter first number: \"))\nnum2 = int(input(\"\\nEnter second number: \"))\nsum = num1 + num2\nprint(\"\\nThe sum of\", num1, \"and\", num2, \"is\", sum)"
+    // };
+
+
     function setSampleCode(language) {
         var code = samples[language];
         editor.setValue(code);
@@ -455,6 +475,11 @@
     //run function
     var runButton = document.getElementById("run");
     runButton.addEventListener("click", function () {
+        runButton.innerHTML = '<i class="fa fa-cog fa-spin"></i> Running...';
+        runButton.classList.remove("bi-play-circle-fill");
+        setTimeout(function() {
+            runButton.innerHTML = '<i class="bi bi-play-circle-fill"></i> Run ( F9 )';
+        }, 1500);
     });
 
     //language function
