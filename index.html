@@ -502,6 +502,12 @@
         }
     });
 
+    //Window Default Size
+    window.addEventListener("resize", () => {
+        const newWidth = 0.7 * window.innerWidth;
+        const newHeight = 0.92 * window.innerHeight;
+        editor.setSize(newWidth, newHeight);
+    });
 
 </script>
 
