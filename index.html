@@ -3,12 +3,9 @@
 
 <head>
     <style>
-        body {
+        body{
             overflow-x: hidden;
-        }
-        #content {
-            height: calc(100vh - 0px);
-            overflow: hidden;
+            overflow-y: hidden;
         }
         :root {
             --gradient1: linear-gradient(
@@ -46,29 +43,7 @@
                 background-position: right;
             }
         }
-        .CodeMirror {
-            border: 1px solid #4b5562;
-            height: auto;
-            font-size: 16px;
-        } 
-        #container {
-            display: flex;
-            flex-direction: row;
-            height: 100vh;
-        }
-        #editor {
-            width: 100%;
-            height: 100%;
-        }
-        #textareaContainer {
-            flex: 7;
-            height: 100%;
-        }
 
-        #outputContainer {
-            flex: 3;
-            height: 100%;
-        }
     </style>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -172,8 +147,8 @@
     <div id="content" class="row bg-dark">
         <div class="col bg-dark">
             <div class="d-flex p-2" style="background-color: #0f172a; width: 100%;border: 1px solid #4b5563">
-                <div class="">
-                    <label id="gradientText" class="bi bi-file-earmark-code-fill me-5" ><b> Online Code Editor</b></label>
+                <div class="me-5">
+                    <label id="gradientText" class="bi bi-file-earmark-code-fill" ><b> Online Code Editor</b></label>
                 </div>
                 <!--Language Button-->
                 <div class="me-2">
@@ -287,22 +262,22 @@
                 </div>
             </div>
 
-            <div id="container">
+            <div style="display:flex;">
                 <!--Editor Window-->
-                <div style="background-color: #0f172a;">
-                    <div id="textareaContainer" >
+                <div style="border: 1px solid #4b5563;background-color: #0f172a; height: 93.5vh;">
+                    <div>
                         <textarea id="editor"></textarea>
                     </div>
                 </div>
 
                 <!--Input & Output Window-->
-                <div id="outputContainer" style="border: 1px solid #4b5563;">
-                    <div class="col d-flex flex-column rounded px-2" style="background-color: #0f172a; height: 100%;">
+                <div style="border: 1px solid #4b5563; flex:3; display: flex; flex-direction: column; height: 93.5vh;">
+                    <div class="col d-flex flex-column px-2" style="background-color: #0f172a;">
                         <div class="h-75">
                             <label id="gradientText" for="Input" class="text-light mt-1 mb-2" style="font-size: 20px; display: flex; flex-direction: row;"><b>Input</b></label>
-                            <textarea type="text" id="input" style="background-color: #1e293b; border-color: rgb(75 85 99); color: white;" class="form-control h-50" aria-label="Last name"></textarea>
+                            <textarea type="text" id="input" style="background-color: #1e293b; border-color: rgb(75 85 99); color: white; width: 100%;" class="form-control h-50" aria-label="Last name"></textarea>
                             <label id="gradientText" for="Output" class="text-light mt-1 mb-2" style="font-size: 20px; display: flex; flex-direction: row;"><b>Output</b></label>
-                            <textarea type="text" id="output" style="background-color: #1e293b; border-color: rgb(75 85 99); color: white;" class="form-control h-50" aria-label="Last name"></textarea>
+                            <textarea type="text" id="output" style="background-color: #1e293b; border-color: rgb(75 85 99); color: white; width: 100%;" class="form-control h-50" aria-label="Last name"></textarea>
                         </div>
                     </div>
                 </div>
@@ -451,14 +426,8 @@
     document.addEventListener("fullscreenchange", () => {
         if (document.fullscreenElement) {
             fullScreenIcon.className = "bi bi-fullscreen-exit";
-            const windowWidth = window.innerWidth;
-            const editorWidth = windowWidth * 0.7;
-            editor.setSize(editorWidth, windowWidth) // Update the size of the editor when entering full-screen mode
         } else {
             fullScreenIcon.className = "bi bi-fullscreen";
-            const windowWidth = window.innerWidth;
-            const editorWidth = windowWidth * 0.7;
-            editor.setSize(editorWidth, windowWidth) // Update the size of the editor when exiting full-screen mode
         }
     });
     document.addEventListener("keydown", (event) => {
@@ -487,9 +456,12 @@
     var input = document.getElementById("input")
     var output = document.getElementById("output")
     var run = document.getElementById("run")
-    const windowWidth = window.innerWidth;
-    const editorWidth = windowWidth * 0.7;
-    editor.setSize(editorWidth, windowWidth);
+    function resizeEditor() {
+        editor.setSize(0.7*width,"92vh");
+      }
+
+      window.addEventListener('resize', resizeEditor);
+      resizeEditor();
     editor.setValue(samples["Java"]);
     var option = document.getElementById("LangSelectPref")
     option.addEventListener("change", function () {
@@ -530,12 +502,7 @@
         }
     });
 
-    //Window Default Size
-    window.addEventListener("resize", () => {
-        const newWidth = 0.7 * window.innerWidth;
-        const newHeight = window.innerHeight;
-        editor.setSize(newWidth, newHeight);
-    });
+
 </script>
 
 </html>
